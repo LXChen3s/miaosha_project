@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- context 一个或多个，指定环境 -->
+    <context id="MySqlContext" targetRuntime="MyBatis3" defaultModelType="flat">
+        <!-- 连接数据库信息，只有一个 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/miaosha?serverTimezone=UTC&amp;nullCatalogMeansCurrent=true"
+                        userId="root"
+                        password="3s3999">
+        </jdbcConnection>
+        <!-- 控制生成实体类，只有一个 -->
+        <javaModelGenerator targetPackage="com.miaosha.dataobject" targetProject="src\main\java">
+            <property name="trimString" value="true"/>
+        </javaModelGenerator>
+        <!-- SQL映射（mapper.xml）生成器的配置 -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src\main\resources">
+        </sqlMapGenerator>
+        <!-- java客户端（Mapper接口）生成器配置 -->
+        <javaClientGenerator targetPackage="com.miaosha.dao" type="XMLMAPPER" targetProject="src\main\java">
+        </javaClientGenerator>
+        <!-- 指定数据库中需要生成的表 -->
+        <table tableName="stock_log" domainObjectName="StockLogDO"></table>
+    </context>
+</generatorConfiguration>

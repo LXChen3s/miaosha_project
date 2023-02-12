@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 定义日志文件的存储地址 -->
+    <property name="LOG_DIR" value="logs"/>
+
+    <!--
+       %p:输出优先级，即DEBUG,INFO,WARN,ERROR,FATAL
+       %r:输出自应用启动到输出该日志讯息所耗费的毫秒数
+       %t:输出产生该日志事件的线程名
+       %f:输出日志讯息所属的类别的类别名
+       %c:输出日志讯息所属的类的全名
+       %d:输出日志时间点的日期或时间，指定格式的方式： %d{yyyy-MM-dd HH:mm:ss}
+       %l:输出日志事件的发生位置，即输出日志讯息的语句在他所在类别的第几行。
+       %m:输出代码中指定的讯息，如log(message)中的message
+       %n:输出一个换行符号
+   -->
+    <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度 %msg：日志消息，%n是换行符-->
+    <property name="pattern" value="%d{HH:mm:ss.SSS,GMT+8} [%thread] %-5level %logger{36} - %msg%n"/>
+
+    <!-- 每个文件大小不得超过10M -->
+    <property name="MAX_FileSize" value="10MB"/>
+    <!-- 最多记录30天 -->
+    <property name="MAX_History" value="30"/>
+    <!-- 文件总大小不得超过100M -->
+    <property name="TotalSizeCap" value="100MB"/>
+
+    <appender name="InfoAppender"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/my_info_log.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 日志分天记录 -->
+            <fileNamePattern>${LOG_DIR}/%d{yyyy-MM-dd}/my_info_log.%i.log</fileNamePattern>
+            <!-- 每个文件大小不得超过10M -->
+            <maxFileSize>${MAX_FileSize}</maxFileSize>
+            <!-- 最多记录30天 -->
+            <maxHistory>${MAX_History}</maxHistory>
+            <!-- 文件总大小不得超过100M -->
+            <totalSizeCap>${TotalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${pattern}</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+        <!-- 过滤器，只记录INFO级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="WarnAppender"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/my_warn_log.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 日志分天记录 -->
+            <fileNamePattern>${LOG_DIR}/%d{yyyy-MM-dd}/my_warn_log.%i.log</fileNamePattern>
+            <!-- 每个文件大小不得超过10M -->
+            <maxFileSize>${MAX_FileSize}</maxFileSize>
+            <!-- 最多记录30天 -->
+            <maxHistory>${MAX_History}</maxHistory>
+            <!-- 文件总大小不得超过100M -->
+            <totalSizeCap>${TotalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${pattern}</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+        <!-- 阈值过滤器，只记录WARN级别以上的日志 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+    </appender>
+
+    <appender name="DebugAppender"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/my_debug_log.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 日志分天记录 -->
+            <fileNamePattern>${LOG_DIR}/%d{yyyy-MM-dd}/my_debug_log.%i.log</fileNamePattern>
+            <!-- 每个文件大小不得超过10M -->
+            <maxFileSize>${MAX_FileSize}</maxFileSize>
+            <!-- 最多记录30天 -->
+            <maxHistory>${MAX_History}</maxHistory>
+            <!-- 文件总大小不得超过100M -->
+            <totalSizeCap>${TotalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${pattern}</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+        <!-- 阈值过滤器，只记录DEBUG级别以上的日志 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+    </appender>
+
+    <appender name="ErrorAppender"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/my_error_log.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 日志分天记录 -->
+            <fileNamePattern>${LOG_DIR}/%d{yyyy-MM-dd}/my_error_log.%i.log</fileNamePattern>
+            <!-- 每个文件大小不得超过10M -->
+            <maxFileSize>${MAX_FileSize}</maxFileSize>
+            <!-- 最多记录30天 -->
+            <maxHistory>${MAX_History}</maxHistory>
+            <!-- 文件总大小不得超过100M -->
+            <totalSizeCap>${TotalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${pattern}</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+        <!-- 过滤器，只记录ERROR级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="SQLDebugAppender"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/my_sql_debug_log.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 日志分天记录 -->
+            <fileNamePattern>${LOG_DIR}/%d{yyyy-MM-dd}/my_sql_debug_log.%i.log</fileNamePattern>
+            <!-- 每个文件大小不得超过10M -->
+            <maxFileSize>${MAX_FileSize}</maxFileSize>
+            <!-- 最多记录30天 -->
+            <maxHistory>${MAX_History}</maxHistory>
+            <!-- 文件总大小不得超过100M -->
+            <totalSizeCap>${TotalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${pattern}</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+        <!-- 阈值过滤器，只记录DEBUG级别以上的日志 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- 输出到控制台 -->
+        <encoder>
+            <pattern>${pattern}</pattern>
+            <charset class="java.nio.charset.Charset">UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+    </appender>
+
+    <!-- 将sql记录到日志 -->
+    <logger name="com.miaosha.dao" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="SQLDebugAppender"/>
+    </logger>
+
+    <!-- 将异常记录到日志，并打印到控制台 -->
+    <logger name="com.miaosha.controller.ExceptionHandleAdvice" additivity="false">
+        <level value="ERROR"/>
+        <appender-ref ref="ErrorAppender"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <root>
+        <level value="DEBUG"/>
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="InfoAppender"/>
+        <appender-ref ref="DebugAppender"/>
+        <appender-ref ref="ErrorAppender"/>
+    </root>
+
+</configuration>
